@@ -7,7 +7,7 @@ import { thunk } from 'redux-thunk';
 
 import { reducers } from './reducers';
 import App from './App';
-
+import './index.css';
 // This will add support for Redux DevTools
 const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
 
