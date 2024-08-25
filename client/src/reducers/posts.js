@@ -1,21 +1,23 @@
-/* eslint-disable import/no-anonymous-default-export */
-/* eslint-disable no-undef */
-/* eslint-disable default-case */
+import { createReducer } from '@reduxjs/toolkit';
 import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 
-export default (posts = [], action) => {
-    switch (action.type) {
-        case FETCH_ALL:
-            return action.payload;
-        case CREATE:
-            return [...posts, action.payload];
-        case UPDATE:
-            return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
-        case DELETE:
-            return posts.filter((post) => post._id !== action.payload);
-        case LIKE:
-            return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
-        default:
-            return posts;
-    }
-};
+const postsReducer = createReducer([], (builder) => {
+    builder
+        .addCase(FETCH_ALL, (state, action) => action.payload)
+        .addCase(CREATE, (state, action) => {
+            state.push(action.payload);
+        })
+        .addCase(UPDATE, (state, action) => {
+            const index = state.findIndex(post => post._id === action.payload._id);
+            if (index !== -1) state[index] = action.payload;
+        })
+        .addCase(LIKE, (state, action) => {
+            const index = state.findIndex(post => post._id === action.payload._id);
+            if (index !== -1) state[index] = action.payload;
+        })
+        .addCase(DELETE, (state, action) => {
+            return state.filter((post) => post._id !== action.payload);
+        });
+});
+
+export default postsReducer;
