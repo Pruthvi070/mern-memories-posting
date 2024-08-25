@@ -1,27 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client'; // Update import
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose } from 'redux';
-import { createStore } from 'redux';
-import { thunk } from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import {thunk }from 'redux-thunk'; // Correct import
 
 import { reducers } from './reducers';
 import App from './App';
 import './index.css';
-// This will add support for Redux DevTools
-const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose;
 
-const store = createStore(
-  reducers, 
-  composeEnhancers(applyMiddleware(thunk))
-);
+const store = createStore(reducers, {}, compose(applyMiddleware(thunk)));
 
-// New way to render with React 18
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root')); // Create root
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>,
 );
