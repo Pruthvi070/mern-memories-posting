@@ -10,6 +10,9 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 50px',
+    background: 'rgba(255, 255, 255, 0.1)', // Glass effect background
+    backdropFilter: 'blur(10px)', // Blur effect
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Shadow for the glass effect
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
@@ -45,6 +48,9 @@ export default makeStyles((theme) => ({
   },
   logout: {
     marginLeft: '20px',
+    background: 'linear-gradient(45deg, #FF8E53 30%, #FF6F61 90%)', // Multicolor gradient
+    border: 'none',
+    color: 'white',
   },
   userName: {
     display: 'flex',
