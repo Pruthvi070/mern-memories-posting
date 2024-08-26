@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {jwtDecode} from 'jwt-decode'; // Correct import
+import { jwtDecode } from 'jwt-decode'; // Updated import
 
 import memoriesLogo from '../../images/memoriesLogo.png';
 import memoriesText from '../../images/memoriesText.png';
@@ -18,7 +18,9 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
+
     navigate('/auth');
+
     setUser(null);
   };
 
@@ -26,16 +28,16 @@ const Navbar = () => {
     const token = user?.token;
 
     if (token) {
-      const decodedToken = jwtDecode(token); // Correct function call
+      const decodedToken = jwtDecode(token); // Updated method
 
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
 
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [location, user, dispatch, navigate]);
+  }, [location]);
 
   return (
-    <AppBar className={classes.appBar} position="static" color="transparent">
+    <AppBar className={classes.appBar} position="static" color="inherit">
       <Link to="/" className={classes.brandContainer}>
         <img src={memoriesText} alt="icon" height="45px" />
         <img className={classes.image} src={memoriesLogo} alt="icon" height="40px" />

@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { useParams, useNavigate } from 'react-router-dom'; // Updated import
+import { useParams, useNavigate, Link } from 'react-router-dom'; // Updated import
 
 import { getPost, getPostsBySearch } from '../../actions/posts';
 import CommentSection from './CommentSection';
 import useStyles from './styles';
 
-const Post = () => {
+const PostDetails = () => {  // Updated component name
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Updated hook
+  const navigate = useNavigate(); // Updated variable name
   const classes = useStyles();
   const { id } = useParams();
 
@@ -27,7 +27,7 @@ const Post = () => {
 
   if (!post) return null;
 
-  const openPost = (_id) => navigate(`/posts/${_id}`); // Updated navigation
+  const openPost = (_id) => navigate(`/posts/${_id}`); // Updated method
 
   if (isLoading) {
     return (
@@ -44,9 +44,19 @@ const Post = () => {
       <div className={classes.card}>
         <div className={classes.section}>
           <Typography variant="h3" component="h2">{post.title}</Typography>
-          <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+          <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => (
+            <Link to={`/tags/${tag}`} style={{ textDecoration: 'none', color: '#3f51b5' }} key={tag}>
+              {` #${tag} `}
+            </Link>
+          ))}
+          </Typography>
           <Typography gutterBottom variant="body1" component="p">{post.message}</Typography>
-          <Typography variant="h6">Created by: {post.name}</Typography>
+          <Typography variant="h6">
+            Created by:
+            <Link to={`/creators/${post.name}`} style={{ textDecoration: 'none', color: '#3f51b5' }}>
+              {` ${post.name}`}
+            </Link>
+          </Typography>
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
           <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
@@ -69,7 +79,7 @@ const Post = () => {
                 <Typography gutterBottom variant="subtitle2">{name}</Typography>
                 <Typography gutterBottom variant="subtitle2">{message}</Typography>
                 <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
-                <img src={selectedFile} width="200px" />
+                <img src={selectedFile} width="200px" alt={title} />
               </div>
             ))}
           </div>
@@ -79,4 +89,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default PostDetails; // Updated export to match the new component name

@@ -11,7 +11,7 @@ export default makeStyles((theme) => ({
     margin: '30px 0',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContentContent: 'center',
     alignItems: 'center',
   },
   heading: {

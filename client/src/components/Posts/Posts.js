@@ -1,7 +1,6 @@
 import React from 'react';
-import { Grid, CircularProgress } from '@material-ui/core'; // Update import if using MUI v5 or later
+import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import Post from './Post/Post';
 import useStyles from './styles';
@@ -9,7 +8,6 @@ import useStyles from './styles';
 const Posts = ({ setCurrentId }) => {
   const { posts, isLoading } = useSelector((state) => state.posts);
   const classes = useStyles();
-  const navigate = useNavigate();
 
   if (!posts.length && !isLoading) return 'No posts';
 

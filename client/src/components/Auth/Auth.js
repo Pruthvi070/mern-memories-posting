@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom'; // Replace useHistory with useNavigate
+import { Avatar, Button, Paper, Grid, Typography, Container, Snackbar } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -16,11 +16,13 @@ const initialState = { firstName: '', lastName: '', email: '', password: '', con
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
+  const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState('info');
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
   const classes = useStyles();
-
   const [showPassword, setShowPassword] = useState(false);
+
   const handleShowPassword = () => setShowPassword(!showPassword);
 
   const switchMode = () => {
@@ -29,13 +31,25 @@ const SignUp = () => {
     setShowPassword(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (isSignup) {
-      dispatch(signup(form, navigate)); // Use navigate instead of history
-    } else {
-      dispatch(signin(form, navigate)); // Use navigate instead of history
+    try {
+      if (isSignup) {
+        await dispatch(signup(form));
+        setMessage('Signup successful!');
+        setSeverity('success');
+        navigate('/');
+      } else {
+        await dispatch(signin(form));
+        setMessage('Signin successful!');
+        setSeverity('success');
+        navigate('/');
+      }
+    } catch (error) {
+      setMessage('Error occurred. Please try again.');
+      setSeverity('error');
+      console.log('Signup/Signin error:', error);
     }
   };
 
@@ -45,13 +59,21 @@ const SignUp = () => {
 
     try {
       dispatch({ type: AUTH, data: { result, token } });
-      navigate('/'); // Use navigate instead of history.push
+      setMessage('Google Sign In successful!');
+      setSeverity('success');
+      navigate('/');
     } catch (error) {
-      console.log(error);
+      setMessage('Google Sign In was unsuccessful. Try again later.');
+      setSeverity('error');
+      console.log('Google Sign In error:', error);
     }
   };
 
-  const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+  const googleError = (error) => {
+    setMessage('Google Sign In was unsuccessful. Try again later.');
+    setSeverity('error');
+    console.log('Google Sign In error:', error);
+  };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -78,17 +100,17 @@ const SignUp = () => {
             { isSignup ? 'Sign Up' : 'Sign In' }
           </Button>
           <GoogleLogin
-            clientId="564033717568-bu2nr1l9h31bhk9bff4pqbenvvoju3oq.apps.googleusercontent.com"
+            clientId="YOUR_CLIENT_ID" // Replace with your Google Client ID
             render={(renderProps) => (
               <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                 Google Sign In
               </Button>
             )}
             onSuccess={googleSuccess}
-            onFailure={googleError}
+            onError={googleError}
             cookiePolicy="single_host_origin"
           />
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
                 { isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign Up" }
@@ -97,6 +119,21 @@ const SignUp = () => {
           </Grid>
         </form>
       </Paper>
+      <Snackbar
+        open={Boolean(message)}
+        autoHideDuration={6000}
+        onClose={() => setMessage('')}
+        message={message}
+        action={
+          <Button color="inherit" onClick={() => setMessage('')}>
+            Close
+          </Button>
+        }
+        ContentProps={{
+          'aria-describedby': 'message-id',
+          className: classes[severity], // Assuming you have styles for success and error messages
+        }}
+      />
     </Container>
   );
 };

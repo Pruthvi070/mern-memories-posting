@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from '@material-ui/core';
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from '@material-ui/core/';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -15,11 +15,11 @@ const Post = ({ post, setCurrentId }) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const [likes, setLikes] = useState(post?.likes);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Updated hook
+  const navigate = useNavigate(); // Updated variable name
   const classes = useStyles();
 
   const userId = user?.result.googleId || user?.result?._id;
-  const hasLikedPost = post?.likes?.find((like) => like === userId);
+  const hasLikedPost = post.likes.find((like) => like === userId);
 
   const handleLike = async () => {
     dispatch(likePost(post._id));
@@ -45,9 +45,9 @@ const Post = ({ post, setCurrentId }) => {
   };
 
   const openPost = (e) => {
-    // dispatch(getPost(post._id, history)); // This line is commented out
+    // dispatch(getPost(post._id, navigate));
 
-    navigate(`/posts/${post._id}`); // Updated navigation
+    navigate(`/posts/${post._id}`); // Updated method
   };
 
   return (

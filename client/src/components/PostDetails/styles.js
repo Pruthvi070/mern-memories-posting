@@ -35,7 +35,7 @@ export default makeStyles((theme) => ({
   },
   loadingPaper: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContentContent: 'center',
     alignItems: 'center',
     padding: '20px',
     borderRadius: '15px',
@@ -43,7 +43,7 @@ export default makeStyles((theme) => ({
   },
   commentsOuterContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContentContent: 'space-between',
   },
   commentsInnerContainer: {
     height: '200px',
