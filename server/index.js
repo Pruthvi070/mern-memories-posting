@@ -18,9 +18,17 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use("/user", userRouter);
 
+// Default route to check if backend is running
+app.get("/", (req, res) => {
+    res.send("Backend is running!");
+});
+
 const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = process.env.CONNECTION_URL;
 
 mongoose.connect(CONNECTION_URL)
-    .then(() => console.log('Database connected successfully'))
+    .then(() => {
+        console.log('Database connected successfully');
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    })
     .catch((error) => console.log(`Database connection failed: ${error.message}`));
