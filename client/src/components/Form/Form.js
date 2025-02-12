@@ -78,7 +78,7 @@ const Form = ({ currentId, setCurrentId }) => {
         <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
     </Paper>
-  );
+  );``
 };
 
 export default Form;

@@ -22,5 +22,5 @@ const PORT = process.env.PORT || 5000;
 const CONNECTION_URL = process.env.CONNECTION_URL;
 
 mongoose.connect(CONNECTION_URL)
-    .then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
-    .catch((error) => console.log(`${error} did not connect`));
+    .then(() => console.log('Database connected successfully'))
+    .catch((error) => console.log(`Database connection failed: ${error.message}`));
