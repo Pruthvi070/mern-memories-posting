@@ -1,6 +1,6 @@
 # Memories Blog Posting Project
-![Screenshot](Screenshot%202025-02-14%20110138.png)
-![Screenshot](Screenshot%202025-02-14%20110248.png)
+![Screenshot](preview1.png)
+![Screenshot](preview2.png)
 
 ## Overview
 Memories is a full-stack blog posting application that allows users to share and explore memorable moments. Built with **React, Redux, Node.js, Express, MongoDB, and Cloudinary**, this project provides a seamless experience for users to create, edit, and manage blog posts with images.
