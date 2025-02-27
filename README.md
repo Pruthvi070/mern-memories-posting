@@ -20,8 +20,6 @@ Memories is a full-stack blog posting application that allows users to share and
 - **Storage:** Cloudinary for image hosting
 - **Deployment:** Render/Vercel (Adjust as needed)
 
-## Installation & Setup
-bash
 # Clone the repository
 git clone https://github.com/Pruthvi070/mern-memories-posting
 cd memories-blog
